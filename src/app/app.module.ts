@@ -16,6 +16,8 @@ import { NavSideBarComponent } from './components/nav-side-bar/nav-side-bar.comp
 import { GeoLocationService } from './services/geo-location.service';
 import { ConfigService } from './services/config.service';
 import { BlockUIModule } from 'ng-block-ui';
+import { DownloadComponent } from './components/download/download.component';
+import { RouterModule } from '@angular/router';
 
 const Material_Imports = [
   MatToolbarModule,
@@ -31,12 +33,14 @@ const Material_Imports = [
     AppComponent,
     HomeComponent,
     MapComponent,
-    NavSideBarComponent
+    NavSideBarComponent,
+    DownloadComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NoopAnimationsModule,
+    RouterModule,
     Material_Imports
   ],
   providers: [GeoLocationService, ConfigService],

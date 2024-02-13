@@ -1,4 +1,5 @@
 <mat-toolbar class="navbar">
+  <div class="nav">
     <!-- begin -->
     <div>
       <button     type="button"
@@ -13,6 +14,8 @@
   
     <!-- TITOLO -->
   
+    <span class="title">{{this.title}}</span>
+  </div>
     <!-- end -->
   
   </mat-toolbar>
@@ -27,7 +30,7 @@
                    -->
       <!-- <ng-container *ngIf="viewNavbar"> -->
         <mat-nav-list  *ngFor="let action of actions">
-          <a mat-list-item [routerLink]="action.path"  style="margin-bottom: -15px;" routerLinkActive="active-list-item">
+          <a mat-list-item (click)="navigate(action.path)"  style="margin-bottom: -15px;" routerLinkActive="active-list-item">
             <div style="  display: flex;
                           flex-direction: row;
                           justify-content: left;

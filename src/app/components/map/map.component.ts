@@ -78,7 +78,6 @@ export class MapComponent implements AfterViewInit {
           optimized: true,
           zIndex: 11
         })
-        this.deleteMarker(this.location);
         this.markers = this.markers.filter(a => a.title !== 'location')
         this.markers.push(this.location);
         this.configService.saveData(this.markers)
@@ -143,10 +142,6 @@ export class MapComponent implements AfterViewInit {
       if (![null, undefined].includes(title)) {
         let dlt = this.markers.indexOf(this.markers.find(a => a.title === title));
         if (dlt !== -1) {
-          let location: google.maps.DirectionsRequest | any = this.directionsResults;
-          console.log("directions request -> ", this.directionsRequest?.destination);
-          console.log("marker position", this.selectedMarker!.getPosition()?.toJSON())
-
           if (this.directionsResults !== undefined) {
             if ((this.directionsRequest?.destination as any)!['lat'] === this.selectedMarker!.getPosition()?.toJSON()!.lat &&
                 (this.directionsRequest?.destination as any)!['lng'] === this.selectedMarker!.getPosition()?.toJSON()!.lng) {
@@ -157,7 +152,7 @@ export class MapComponent implements AfterViewInit {
           this.configService.saveData(this.markers)
           //write Data
         }
-          console.log("Indice = -1");
+          
       }
 
     }

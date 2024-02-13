@@ -21,7 +21,7 @@ export class ConfigService {
         this.saveData([])
       });
       console.log('secrets:', contents);
-      const data = (contents as ReadFileResult).data
+      const data = (contents as ReadFileResult)?.data
       return JSON.parse(`${data}`)
   };
 
@@ -35,7 +35,7 @@ export class ConfigService {
   };
 
 
-
+  
   // getAllFlows(){
   //   return this.config.flows.sort((a,b) => a.createdAt - b.createdAt)
   // }
