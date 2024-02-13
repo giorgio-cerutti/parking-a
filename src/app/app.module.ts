@@ -15,6 +15,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { NavSideBarComponent } from './components/nav-side-bar/nav-side-bar.component';
 import { GeoLocationService } from './services/geo-location.service';
 import { ConfigService } from './services/config.service';
+import { BlockUIModule } from 'ng-block-ui';
 
 const Material_Imports = [
   MatToolbarModule,
@@ -22,7 +23,8 @@ const Material_Imports = [
   MatSidenavModule,
   MatListModule,
   MatButtonModule,
-  GoogleMapsModule
+  GoogleMapsModule,
+  BlockUIModule
 ]
 @NgModule({
   declarations: [

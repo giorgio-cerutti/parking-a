@@ -3,6 +3,7 @@ import { GoogleMap, MapInfoWindow, MapMarker, MapDirectionsRenderer, MapDirectio
 import { Observable, map } from 'rxjs';
 import { ConfigService } from 'src/app/services/config.service';
 import { GeoLocationService } from 'src/app/services/geo-location.service';
+import { LibService } from 'src/app/services/lib.service';
 
 
 @Component({
@@ -35,12 +36,12 @@ export class MapComponent implements AfterViewInit {
   directionsRenderOption: google.maps.DirectionsRendererOptions = {
     polylineOptions: {
       strokeColor: 'rgb(0, 128, 255)', // colore delle indicazioni
-      icons:[  
+      icons:[
         {
           icon: {
-            path: google.maps.SymbolPath.CIRCLE, //icona a cerchio          
+            path: google.maps.SymbolPath.CIRCLE, //icona a cerchio
           },
-          offset: "10px", // La distanza dall'inizio della linea da cui deve essere visualizzata un'icona 
+          offset: "10px", // La distanza dall'inizio della linea da cui deve essere visualizzata un'icona
           repeat: "10px" // Ogni quanto l'icon deve essere ripetuta
         }
       ]
@@ -52,18 +53,19 @@ export class MapComponent implements AfterViewInit {
         zIndex: 10,
         animation: google.maps.Animation.DROP,
     }
-    
+
   };
 
   constructor(
     private mapDirectionsService: MapDirectionsService,
     private locationService: GeoLocationService,
-    private configService: ConfigService
-  ) {  
+    private configService: ConfigService,
+    private libService: LibService
+  ) {
 
     this.configService.loadData().then(res => {
       this.markers = res;
-    
+
       this.locationService.watchPosition().subscribe(res => {
         console.log("watch POSITION --> ", res)
         this.center.lat = res.coords.latitude;
@@ -71,7 +73,7 @@ export class MapComponent implements AfterViewInit {
         this.location = new google.maps.Marker({
           position: this.center,
           title: 'location',
-          draggable: false, 
+          draggable: false,
           clickable: false,
           optimized: true,
           zIndex: 11
@@ -84,7 +86,7 @@ export class MapComponent implements AfterViewInit {
 
       });
     });
-    
+
   }
 
   ngAfterViewInit(): void {
@@ -116,9 +118,9 @@ export class MapComponent implements AfterViewInit {
           text: 'Parcheggio' + (this.markers.length + 1),
         },
         title: 'Parking ' + (this.markers.length + 1),
-        
+
         animation: google.maps.Animation.DROP,
-        
+
       })
       this.markers.push(marker);
       this.configService.saveData(this.markers)
@@ -136,7 +138,7 @@ export class MapComponent implements AfterViewInit {
     let title = this.selectedMarker?.getTitle()?.toString()
     console.log("Marker Remover -> ", title);
     if (title === 'location') {
-      
+
     } else {
       if (![null, undefined].includes(title)) {
         let dlt = this.markers.indexOf(this.markers.find(a => a.title === title));
@@ -144,7 +146,7 @@ export class MapComponent implements AfterViewInit {
           let location: google.maps.DirectionsRequest | any = this.directionsResults;
           console.log("directions request -> ", this.directionsRequest?.destination);
           console.log("marker position", this.selectedMarker!.getPosition()?.toJSON())
-          
+
           if (this.directionsResults !== undefined) {
             if ((this.directionsRequest?.destination as any)!['lat'] === this.selectedMarker!.getPosition()?.toJSON()!.lat &&
                 (this.directionsRequest?.destination as any)!['lng'] === this.selectedMarker!.getPosition()?.toJSON()!.lng) {
@@ -157,7 +159,7 @@ export class MapComponent implements AfterViewInit {
         }
           console.log("Indice = -1");
       }
-      
+
     }
   }
 
@@ -199,7 +201,7 @@ export class MapComponent implements AfterViewInit {
     controlButton.style.padding = '5px';
     controlButton.style.textAlign = 'center';
 
-    // controlButton.textContent = 
+    // controlButton.textContent =
     controlButton.innerHTML = '<i id="icon" class="material-icons">my_location</i>';
     controlButton.title = 'Click to recenter the map';
     controlButton.type = 'button';
@@ -211,12 +213,10 @@ export class MapComponent implements AfterViewInit {
   }
 
   setCenter(): void {
-    let c = this.center
-    this.realCenter = c;
-    this.map?.googleMap?.setCenter(this.realCenter)
-    this.zoom = 17;
-    console.log("real Center -> ", this.realCenter);
-    console.log("this center -> ", this.center);
+    console.log('click')
+    this.libService.lockPage('Localizing...')
+
+    this.map?.googleMap?.setCenter(this.center)
   }
 
   createNavigationControl() {
@@ -237,7 +237,7 @@ export class MapComponent implements AfterViewInit {
     controlButton.style.padding = '5px';
     controlButton.style.textAlign = 'center';
 
-    // controlButton.textContent = 
+    // controlButton.textContent =
     controlButton.innerHTML = 'Esci dalla Navigazione';
     controlButton.title = 'Click to exit navigation';
     controlButton.type = 'button';
@@ -255,12 +255,23 @@ export class MapComponent implements AfterViewInit {
   }
 
   openGoogleMaps(marker: MapMarker | any) {
-    
+
     let lat = this.selectedMarker!.getPosition()?.toJSON().lat as number;
     let lng = this.selectedMarker!.getPosition()?.toJSON().lng as number;
 
     let url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 
     window.open(url, "_blank");
+  }
+
+  setMarkerIcon(marker: MapMarker | any) {
+    switch (marker.title) {
+      case 'location':
+        return '../../assets/icons/blue-dot.png'
+        break;
+      default:
+        return '../../assets/icons/marker-icon.png'
+        break;
+    }
   }
 }

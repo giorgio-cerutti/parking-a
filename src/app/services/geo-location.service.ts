@@ -8,17 +8,23 @@ export class GeoLocationService {
 
   constructor() { }
 
-  getPosition(): Promise<any>
+  getPosition(): Observable<any>
   {
-    return new Promise((resolve, reject) => {
+    return Observable.create(
+      (observer: any) => {
 
-      navigator.geolocation.getCurrentPosition(resp => {
-          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-        },
-        err => {
-          reject(err);
-        });
+        return navigator.geolocation.getCurrentPosition(resp => {
+          observer.next({lng: resp.coords.longitude, lat: resp.coords.latitude})
+
+        }),
+      () => {
+          console.log('Position is not available');
+      },
+      {
+        enableHighAccuracy: true
+      };
     });
+
 
   }
 
@@ -26,7 +32,7 @@ export class GeoLocationService {
   {
     return Observable.create(
       (observer: any) => {
-        
+
       navigator.geolocation.watchPosition((pos: any) => {
         observer.next(pos);
       }, () => '', {enableHighAccuracy: true, maximumAge: 0 }),

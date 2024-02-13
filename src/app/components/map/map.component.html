@@ -6,17 +6,17 @@
             (mapClick)="clickMap($event)"
             (mapMousemove)="move($event)">
 
-    <map-marker #somemarker="mapMarker" 
+    <map-marker #somemarker="mapMarker"
                 *ngFor="let marker of markers"
                 [position]="marker.position"
-                [icon]="marker.title =='location'? '../../assets/icons/blue-dot.png': ''"
+                [icon]="setMarkerIcon(marker)"
                 [title]="marker.title"
                 [options]="marker.options"
                 (mapClick)="openInfo(somemarker, marker.info)"
-                
+
                 [draggable]="true"
                 >
-            
+
         <map-info-window>
         <div class="info-window">
             <div class="first-row">
@@ -33,7 +33,7 @@
                             mat-button
                             (click)="this.deleteMarker(marker, 'html')"
                             >
-                    
+
                     Remove
                 </button>
             </div>
@@ -54,13 +54,13 @@
       </map-info-window>
     </map-marker>
 
- 
-        <map-directions-renderer    *ngIf="(this.directionsResults)" 
-                                    [directions]="directionsResults" 
+
+        <map-directions-renderer    *ngIf="(this.directionsResults)"
+                                    [directions]="directionsResults"
                                     [options]="directionsRenderOption"
                                     ></map-directions-renderer>
-    
-    
+
+
 </google-map>
 
 <div>Latitude: {{display?.lat}}</div>
