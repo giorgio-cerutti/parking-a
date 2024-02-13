@@ -1,0 +1,40 @@
+.angular-google-map-container {
+    width: 100vw;
+    height: 80vh;
+}
+
+.info-window {
+    height: 15vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.first-row {
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.button-remove {
+    background-color: rgb(252, 41, 41);
+    color: white;
+
+}
+
+.button-directions {
+    background-color: rgb(29, 119, 255);
+    color: white;
+
+}
+
+.button-maps {
+    background-color: rgb(16, 193, 0);
+    color: white;
+
+}

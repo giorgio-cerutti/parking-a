@@ -1,0 +1,67 @@
+
+<google-map [center]="realCenter"
+            [zoom]="zoom"
+            height="80vh"
+            width="100vw"
+            (mapClick)="clickMap($event)"
+            (mapMousemove)="move($event)">
+
+    <map-marker #somemarker="mapMarker" 
+                *ngFor="let marker of markers"
+                [position]="marker.position"
+                [icon]="marker.title =='location'? '../../assets/icons/blue-dot.png': ''"
+                [title]="marker.title"
+                [options]="marker.options"
+                (mapClick)="openInfo(somemarker, marker.info)"
+                
+                [draggable]="true"
+                >
+            
+        <map-info-window>
+        <div class="info-window">
+            <div class="first-row">
+                <button     type="button"
+                            class="button-directions"
+                            aria-label="Bring Me Here"
+                            mat-button
+                            (click)="this.giveDirections(somemarker)">
+                    Bring me Here
+                </button>
+                <button     type="button"
+                            class="button-remove"
+                            aria-label="Remove Marker"
+                            mat-button
+                            (click)="this.deleteMarker(marker, 'html')"
+                            >
+                    
+                    Remove
+                </button>
+            </div>
+            <div>
+                <button     type="button"
+                            class="button-maps"
+                            aria-label="Remove Marker"
+                            mat-button
+                            (click)="this.openGoogleMaps(marker)"
+                            >
+                    <mat-icon>
+                        maps
+                    </mat-icon>
+                    Google Maps
+                </button>
+            </div>
+        </div>
+      </map-info-window>
+    </map-marker>
+
+ 
+        <map-directions-renderer    *ngIf="(this.directionsResults)" 
+                                    [directions]="directionsResults" 
+                                    [options]="directionsRenderOption"
+                                    ></map-directions-renderer>
+    
+    
+</google-map>
+
+<div>Latitude: {{display?.lat}}</div>
+<div>Longitude: {{display?.lng}}</div>

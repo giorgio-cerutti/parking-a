@@ -1,0 +1,52 @@
+<mat-toolbar class="navbar">
+    <!-- begin -->
+    <div>
+      <button     type="button"
+                  aria-label="Toggle sidenav"
+                  mat-icon-button
+                  (click)="drawer.toggle()">
+        <mat-icon>
+          menu
+        </mat-icon>
+      </button>
+    </div>
+  
+    <!-- TITOLO -->
+  
+    <!-- end -->
+  
+  </mat-toolbar>
+  
+  <mat-sidenav-container class="sidebar-container">
+    <mat-sidenav #drawer class="sidebar"
+    [fixedInViewport]="true"
+  >
+                  <!--
+                    AVAILABLE MODES FOR MAT-SIDENAV: 'over', 'side'
+  
+                   -->
+      <!-- <ng-container *ngIf="viewNavbar"> -->
+        <mat-nav-list  *ngFor="let action of actions">
+          <a mat-list-item [routerLink]="action.path"  style="margin-bottom: -15px;" routerLinkActive="active-list-item">
+            <div style="  display: flex;
+                          flex-direction: row;
+                          justify-content: left;
+                          align-items: center;">
+              <mat-icon >
+                {{ action.icon }}
+              </mat-icon>
+              <span style="margin-left: .8em;">
+                  {{action.description}}
+              </span>
+            </div>
+          </a>
+        </mat-nav-list>
+      <!-- </ng-container> -->
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content">
+  
+      <!-- Add Content Here -->
+      <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

@@ -1,0 +1,17 @@
+.navbar {
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar {
+    z-index: 10;
+    display: flex;  
+    position: absolute;
+}
+
+.sidebar-container {
+    height: 100%;
+
+}
