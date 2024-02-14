@@ -10,8 +10,9 @@
       "region": "us-central1"
     },
     "redirects": [ {
-      "source": "/",
+      "source": "",
       "destination": "/home"
+
   } ]
   }
 }
