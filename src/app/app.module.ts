@@ -18,6 +18,8 @@ import { ConfigService } from './services/config.service';
 import { BlockUIModule } from 'ng-block-ui';
 import { DownloadComponent } from './components/download/download.component';
 import { RouterModule } from '@angular/router';
+import { DialogComponent } from './components/shared/dialog/dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const Material_Imports = [
   MatToolbarModule,
@@ -26,7 +28,8 @@ const Material_Imports = [
   MatListModule,
   MatButtonModule,
   GoogleMapsModule,
-  BlockUIModule
+  BlockUIModule,
+  MatDialogModule
 ]
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ const Material_Imports = [
     HomeComponent,
     MapComponent,
     NavSideBarComponent,
-    DownloadComponent
+    DownloadComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
