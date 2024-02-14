@@ -6,7 +6,13 @@ import { DownloadComponent } from './components/download/download.component';
 const routes: Routes = [
   {
     path: '*',
-    redirectTo: 'home'
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
   {
     path: 'home',
@@ -21,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, {  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

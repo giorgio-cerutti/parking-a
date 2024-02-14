@@ -18,6 +18,7 @@ import { ConfigService } from './services/config.service';
 import { BlockUIModule } from 'ng-block-ui';
 import { DownloadComponent } from './components/download/download.component';
 import { RouterModule } from '@angular/router';
+import {Title} from "@angular/platform-browser";
 import { DialogComponent } from './components/shared/dialog/dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 
@@ -45,9 +46,11 @@ const Material_Imports = [
     AppRoutingModule,
     NoopAnimationsModule,
     RouterModule,
-    Material_Imports
+    Material_Imports,
+    Title
+    
   ],
-  providers: [GeoLocationService, ConfigService],
+  providers: [GeoLocationService, ConfigService, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
