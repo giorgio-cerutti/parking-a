@@ -62,9 +62,29 @@ export class MapComponent implements AfterViewInit {
     private configService: ConfigService,
     private libService: LibService
   ) {
-
+    this.libService.lockPage('Localizing...');
+    
     this.configService.loadData().then(res => {
       this.markers = res;
+
+      this.locationService.getPosition().subscribe(res => {
+        console.log("watch POSITION --> ", res)
+        this.center.lat = res.lat;
+        this.center.lng = res.lng;
+        this.location = new google.maps.Marker({
+          position: this.center,
+          title: 'location',
+          draggable: false,
+          clickable: false,
+          optimized: true,
+          zIndex: 11
+        })
+        this.markers = this.markers.filter(a => a.title !== 'location')
+        this.markers.push(this.location);
+        this.configService.saveData(this.markers)
+        this.setCenter();
+        this.libService.unlockPage();
+      })
 
       this.locationService.watchPosition().subscribe(res => {
         console.log("watch POSITION --> ", res)
@@ -82,7 +102,6 @@ export class MapComponent implements AfterViewInit {
         this.markers.push(this.location);
         this.configService.saveData(this.markers)
         //write Data
-
       });
     });
 
@@ -137,7 +156,6 @@ export class MapComponent implements AfterViewInit {
     let title = this.selectedMarker?.getTitle()?.toString()
     console.log("Marker Remover -> ", title);
     if (title === 'location') {
-
     } else {
       if (![null, undefined].includes(title)) {
         let dlt = this.markers.indexOf(this.markers.find(a => a.title === title));
@@ -209,8 +227,6 @@ export class MapComponent implements AfterViewInit {
 
   setCenter(): void {
     console.log('click')
-    this.libService.lockPage('Localizing...')
-
     this.map?.googleMap?.setCenter(this.center)
   }
 

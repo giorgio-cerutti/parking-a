@@ -28,7 +28,8 @@ const Material_Imports = [
   MatListModule,
   MatButtonModule,
   GoogleMapsModule,
-  BlockUIModule
+  // BlockUIModule,
+  BlockUIModule.forRoot()
 ]
 @NgModule({
   declarations: [

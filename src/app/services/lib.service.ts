@@ -10,6 +10,7 @@ export class LibService {
 
   lockPage = (message: string) => {
     setTimeout(() => {
+      console.log(message)
       this.blockUI.start(message);
     })
   }
