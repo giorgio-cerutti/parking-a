@@ -4,6 +4,8 @@ import { Observable, map } from 'rxjs';
 import { ConfigService } from 'src/app/services/config.service';
 import { GeoLocationService } from 'src/app/services/geo-location.service';
 import { LibService } from 'src/app/services/lib.service';
+import { DialogComponent } from '../shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -60,7 +62,8 @@ export class MapComponent implements AfterViewInit {
     private mapDirectionsService: MapDirectionsService,
     private locationService: GeoLocationService,
     private configService: ConfigService,
-    private libService: LibService
+    private libService: LibService,
+    private dialog: MatDialog
   ) {
     this.libService.lockPage('Localizing...');
     
@@ -158,18 +161,29 @@ export class MapComponent implements AfterViewInit {
     if (title === 'location') {
     } else {
       if (![null, undefined].includes(title)) {
-        let dlt = this.markers.indexOf(this.markers.find(a => a.title === title));
-        if (dlt !== -1) {
-          if (this.directionsResults !== undefined) {
-            if ((this.directionsRequest?.destination as any)!['lat'] === this.selectedMarker!.getPosition()?.toJSON()!.lat &&
-                (this.directionsRequest?.destination as any)!['lng'] === this.selectedMarker!.getPosition()?.toJSON()!.lng) {
-              this.exitNavigation();
+        
+        const dialogRef = this.dialog.open(DialogComponent, {});
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result)
+          if (result === true) {
+            let dlt = this.markers.indexOf(this.markers.find(a => a.title === title));
+            if (dlt !== -1) {
+              if (this.directionsResults !== undefined) {
+                if ((this.directionsRequest?.destination as any)!['lat'] === this.selectedMarker!.getPosition()?.toJSON()!.lat &&
+                    (this.directionsRequest?.destination as any)!['lng'] === this.selectedMarker!.getPosition()?.toJSON()!.lng) {
+                  this.exitNavigation();
+                }
+              }
+              this.markers.splice(dlt, 1);
+              this.configService.saveData(this.markers)
+              //write Data
             }
+            
           }
-          this.markers.splice(dlt, 1);
-          this.configService.saveData(this.markers)
-          //write Data
-        }
+        });
+        
+        
           
       }
 

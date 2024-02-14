@@ -19,7 +19,8 @@ import { BlockUIModule } from 'ng-block-ui';
 import { DownloadComponent } from './components/download/download.component';
 import { RouterModule } from '@angular/router';
 import {Title} from "@angular/platform-browser";
-
+import { DialogComponent } from './components/shared/dialog/dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const Material_Imports = [
   MatToolbarModule,
@@ -28,8 +29,8 @@ const Material_Imports = [
   MatListModule,
   MatButtonModule,
   GoogleMapsModule,
-  // BlockUIModule,
-  BlockUIModule.forRoot()
+  BlockUIModule.forRoot(),
+  MatDialogModule
 ]
 @NgModule({
   declarations: [
@@ -37,14 +38,15 @@ const Material_Imports = [
     HomeComponent,
     MapComponent,
     NavSideBarComponent,
-    DownloadComponent
+    DownloadComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NoopAnimationsModule,
     RouterModule,
-    Material_Imports,
+    Material_Imports
     
   ],
   providers: [GeoLocationService, ConfigService, Title],
