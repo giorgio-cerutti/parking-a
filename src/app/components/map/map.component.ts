@@ -66,6 +66,8 @@ export class MapComponent implements AfterViewInit {
     private dialog: MatDialog
   ) {
     this.libService.lockPage('Localizing...');
+
+    setTimeout(() => { this.libService.unlockPage(); }, 10000)
     
     this.configService.loadData().then(res => {
       this.markers = res;
