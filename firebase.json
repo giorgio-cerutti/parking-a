@@ -8,6 +8,10 @@
     ],
     "frameworksBackend": {
       "region": "us-central1"
-    }
+    },
+    "redirects": [ {
+      "source": "/",
+      "destination": "/home"
+  } ]
   }
 }
