@@ -18,6 +18,8 @@ import { ConfigService } from './services/config.service';
 import { BlockUIModule } from 'ng-block-ui';
 import { DownloadComponent } from './components/download/download.component';
 import { RouterModule } from '@angular/router';
+import {Title} from "@angular/platform-browser";
+
 
 const Material_Imports = [
   MatToolbarModule,
@@ -41,9 +43,10 @@ const Material_Imports = [
     AppRoutingModule,
     NoopAnimationsModule,
     RouterModule,
-    Material_Imports
+    Material_Imports,
+    
   ],
-  providers: [GeoLocationService, ConfigService],
+  providers: [GeoLocationService, ConfigService, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
